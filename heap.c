@@ -55,8 +55,10 @@ void heap_swap(heap_t *heap, int index1, int index2) {
 void heap_bubble_up(heap_t *heap, int index) {
     // FILL ME IN
     int parent = heap_parent(index);
+    
     if (parent < heap_size(heap) &&
         heap->data[index].key < heap->data[parent].key) {
+        
         heap_swap(heap, index, parent);
         heap_bubble_up(heap, parent);
     }
