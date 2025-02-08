@@ -31,6 +31,7 @@ unsigned int heap_left_child(unsigned int index) {
 
 unsigned int heap_right_child(unsigned int index) {
     // FILL ME OUT
+    return 2 * index + 2;
 }
 
 unsigned int heap_level(unsigned int index) {
@@ -53,6 +54,12 @@ void heap_swap(heap_t *heap, int index1, int index2) {
 
 void heap_bubble_up(heap_t *heap, int index) {
     // FILL ME IN
+    int parent = heap_parent(index);
+    if (parent < heap_size(heap) &&
+        heap->data[index].key < heap->data[parent].key) {
+        heap_swap(heap, index, parent);
+        heap_bubble_up(heap, parent);
+    }
 }
 
 void heap_bubble_down(heap_t *heap, int index) {
@@ -124,8 +131,21 @@ heap_value_t heap_find_key(heap_t *heap, heap_key_t aKey) {
 
 void heap_update_key(heap_t *heap, heap_key_t old_key, heap_key_t new_key) {
     // FILL ME IN
+    int old_idx = heap_find_key_index(heap, old_key);
 
+    if (old_idx != KEY_NOT_PRESENT) {
+        heap->data[old_idx].key = new_key;
+
+        if (new_key > old_key)
+            heap_bubble_down(heap, old_idx);
+        else if (new_key < old_key)
+            heap_bubble_up(heap, old_idx);
+    }
 }
 void heap_update_value(heap_t *heap, heap_key_t key, heap_value_t new_data) {
     // FILL ME IN
+    int index = heap_find_key_index(heap, key);
+
+    if (index != KEY_NOT_PRESENT)
+        heap->data[index].value = new_data;
 }
