@@ -13,5 +13,7 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ -lm
 
+heap.o: heap.c heap.h
+
 clean:
 	rm -f $(TARGET) $(OBJS) 
